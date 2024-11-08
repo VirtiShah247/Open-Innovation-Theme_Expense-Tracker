@@ -10,7 +10,7 @@ function Expenses() {
     const [barExpense, setBarExpense] = useState({});
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/get-expenses')
+        axios.get('https://open-innovation-theme-expense-tracker.onrender.com/get-expenses')
             .then(response => {
                 const data = response.data;
                 const transformedExpenses = Object.keys(data.date).map(key => ({
