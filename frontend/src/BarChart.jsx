@@ -1,10 +1,10 @@
 import React from 'react';
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-function PieChart({ data }) {
+function BarChart({ data }) {
     const chartData = {
         labels: Object.keys(data),
         datasets: [
@@ -33,13 +33,22 @@ function PieChart({ data }) {
     };
 
     const options = {
+        scales: {
+            y: {
+                ticks: {
+                    callback: function (value) {
+                        return `Rs. ${value}`;
+                    },
+                },
+            },
+        },
         plugins: {
             tooltip: {
                 callbacks: {
                     label: function (context) {
                         const label = context.label || '';
                         const value = context.raw || 0;
-                        return `${label}: Rs.${value}`;
+                        return `${label}: Rs. ${value}`;
                     },
                 },
             },
@@ -47,10 +56,10 @@ function PieChart({ data }) {
     };
 
     return (
-        <div style={{ width: '25%' }}>
-            <Pie data={chartData} options={options} />
+        <div style={{ width: '50%' }}>
+            <Bar data={chartData} options={options} />
         </div>
     );
 }
 
-export default PieChart;
+export default BarChart;

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PieChart from './PieChart';
+import LineChart from './LineChart';
+import BarChart from './BarChart';
 
 function Expenses() {
     const [expenses, setExpenses] = useState([]);
@@ -34,6 +36,8 @@ function Expenses() {
         <div>
             <h1>Dashboard</h1>
             <PieChart data={categoryExpense} />
+            <BarChart data={categoryExpense} />
+            {/* <LineChart data={categoryExpense} /> */}
             {
                 console.log("expense: ", categoryExpense)
             }
