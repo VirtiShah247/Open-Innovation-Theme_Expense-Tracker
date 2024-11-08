@@ -152,17 +152,5 @@ def webhook():
     return response
 
 
-socketio = SocketIO(app)
-
-
-@app.route("/webhook", methods=["POST"])
-def webhook():
-    data = request.json
-    print(f"Received webhook for spreadsheet: {data['spreadsheetId']}")
-
-    socketio.emit("data_update", {"message": "Spreadsheet updated"})
-    return jsonify({"status": "success"}), 200
-
-
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
