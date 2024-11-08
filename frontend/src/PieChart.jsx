@@ -34,20 +34,30 @@ function PieChart({ data }) {
 
     const options = {
         plugins: {
+            legend: {
+                labels: {
+                    font: {
+                        weight: 'bold',
+                    },
+                },
+            },
             tooltip: {
                 callbacks: {
                     label: function (context) {
                         const label = context.label || '';
                         const value = context.raw || 0;
-                        return `${label}: Rs.${value}`;
+                        return `${label}: Rs. ${value}`;
                     },
-                },
+                    labelTextColor: function () {
+                        return '#fff'; // Set tooltip text color to black
+                    },
+                }
             },
         },
     };
 
     return (
-        <div style={{ width: '25%' }}>
+        <div class="w-auto min-w-72">
             <Pie data={chartData} options={options} />
         </div>
     );
