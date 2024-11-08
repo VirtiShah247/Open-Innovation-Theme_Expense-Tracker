@@ -134,12 +134,11 @@ def fetch_data():
 
 @app.route("/get-expenses", methods=["GET"])
 def get_expenses():
-    # data = fetch_data()
-    # response = app.response_class(
-    #     response=jsonify.dumps(data), status=200, mimetype="application/json"
-    # )
-    # return response
-    return "hello"
+    data = fetch_data()
+    response = app.response_class(
+        response=data, status=200, mimetype="application/json"
+    )
+    return response
 
 
 @app.route("/webhook", methods=["POST"])
@@ -149,7 +148,7 @@ def webhook():
     # Optionally, re-fetch the data and store/update it
     data = fetch_data()
     response = app.response_class(
-        response=jsonify.dumps(data), status=200, mimetype="application/json"
+        response=data, status=200, mimetype="application/json"
     )
     print("Data fetched successfully")
     return response
