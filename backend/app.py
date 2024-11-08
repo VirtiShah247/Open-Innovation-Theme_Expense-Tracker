@@ -10,6 +10,8 @@ from google.oauth2.service_account import Credentials
 from flask import request, make_response, session
 from flask_restful import Resource
 
+from flask_socketio import SocketIO, emit
+
 # Local imports
 from config import app, db, api
 from models import *
@@ -99,7 +101,6 @@ app = Flask(__name__)
 # api.add_resource(Logout, "/logout", endpoint="logout")
 
 
-
 def fetch_data():
     # Add your credentials
     creds = Credentials.from_service_account_file(
@@ -132,12 +133,36 @@ def fetch_data():
 @app.route("/get-expenses", methods=["GET"])
 def get_expenses():
     data = fetch_data()
-    return data
+    response = app.response_class(
+        response=jsonify.dumps(data), status=200, mimetype="application/json"
+    )
+    return response
+
+
+@app.route("/webhook", methods=["POST"])
+def webhook():
+    data = request.json
+    # Handle the event, like fetching updated data from Google Sheets
+    # Optionally, re-fetch the data and store/update it
+    data = fetch_data()
+    response = app.response_class(
+        response=jsonify.dumps(data), status=200, mimetype="application/json"
+    )
+    print("Data fetched successfully")
+    return response
+
+
+socketio = SocketIO(app)
+
+
+@app.route("/webhook", methods=["POST"])
+def webhook():
+    data = request.json
+    print(f"Received webhook for spreadsheet: {data['spreadsheetId']}")
+
+    socketio.emit("data_update", {"message": "Spreadsheet updated"})
+    return jsonify({"status": "success"}), 200
 
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
