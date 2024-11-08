@@ -8,6 +8,7 @@ from google.oauth2.service_account import Credentials
 
 # Remote library imports
 from flask import request, make_response, session
+from flask_cors import CORS
 from flask_restful import Resource
 
 from flask_socketio import SocketIO, emit
@@ -19,6 +20,7 @@ from models import *
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 
 # class CheckSession(Resource):
