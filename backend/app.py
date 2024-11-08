@@ -134,11 +134,12 @@ def fetch_data():
 
 @app.route("/get-expenses", methods=["GET"])
 def get_expenses():
-    data = fetch_data()
-    response = app.response_class(
-        response=jsonify.dumps(data), status=200, mimetype="application/json"
-    )
-    return response
+    # data = fetch_data()
+    # response = app.response_class(
+    #     response=jsonify.dumps(data), status=200, mimetype="application/json"
+    # )
+    # return response
+    return "hello"
 
 
 @app.route("/webhook", methods=["POST"])
