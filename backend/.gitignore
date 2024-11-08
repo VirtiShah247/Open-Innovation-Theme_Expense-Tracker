@@ -1,0 +1,6 @@
+/.env
+/Pipfile.lock
+/.venv
+/expense-tracker-430605-6cafa04bed91.json
+/package.json
+/package-lock.json
